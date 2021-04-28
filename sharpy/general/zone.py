@@ -59,10 +59,10 @@ class Zone:
         # Timing on when there could be enemy workers here
         self.could_have_enemy_workers_in = 0
 
-        # All mineral fields on the zone
+        # All mineral fields on the zone. Note: expansion_locations_dict includes vespene geysers.
         self._original_mineral_fields: Units = self.ai.expansion_locations_dict.get(
             self.center_location, Units([], self.ai)
-        )
+        ).mineral_field
         self.mineral_fields: Units = Units(self._original_mineral_fields.copy(), self.ai)
 
         self.last_minerals: int = 10000000  # Arbitrary value just to ensure a lower value will get updated.
