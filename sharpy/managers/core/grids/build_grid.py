@@ -117,7 +117,7 @@ class BuildGrid(Grid):
 
     def fill_line(self, ai, mining_filler, neutral_unit):
         pos: Point2 = neutral_unit.position
-        closest_expansion = pos.closest(ai.expansion_locations.keys())
+        closest_expansion = pos.closest(ai.expansion_locations_list)
         direction = closest_expansion - neutral_unit.position
         direction = sc2math.point_normalize(direction)
         i = 1
