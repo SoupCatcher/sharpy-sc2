@@ -58,6 +58,7 @@ build_commands = {
     AbilityId.ZERGBUILD_SPIRE,
     AbilityId.ZERGBUILD_SPORECRAWLER,
     AbilityId.ZERGBUILD_ULTRALISKCAVERN,
+    AbilityId.BUILD_LURKERDEN,
 }
 
 
