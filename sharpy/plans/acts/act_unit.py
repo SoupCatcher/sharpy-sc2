@@ -90,7 +90,7 @@ class ActUnit(ActBase):
         unit_data = self.ai._game_data.units[self.unit_type.value]
         cost = self.ai._game_data.calculate_ability_cost(unit_data.creation_ability)
 
-        if self.builders.ready.exists and self.knowledge.can_afford(unit_data.creation_ability):
+        if self.builders.ready.exists and self.knowledge.can_afford(self.unit_type):
             for builder in self.builders.ready:
                 if self.has_order_ready(builder) and not builder.is_flying:
                     if builder.tag in self.ai.unit_tags_received_action:
