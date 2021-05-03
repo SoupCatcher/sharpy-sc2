@@ -1,4 +1,5 @@
 from typing import TYPE_CHECKING, Optional
+import logging
 
 from sc2.client import Client
 from sc2.position import Point3
@@ -69,8 +70,8 @@ class Component:
         self.zone_manager = self.knowledge.zone_manager
         self.cd_manager = knowledge.cooldown_manager
 
-    def print(self, msg: str, stats: bool = True):
-        self.knowledge.print(msg, type(self).__name__, stats)
+    def print(self, msg: str, stats: bool = True, log_level=logging.INFO):
+        self.knowledge.print(msg, type(self).__name__, stats, log_level)
 
     async def start_component(self, component: "Component", knowledge: "Knowledge"):
         component.parent_key = self.key
