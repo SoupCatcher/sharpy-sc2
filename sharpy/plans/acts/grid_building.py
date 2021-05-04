@@ -400,4 +400,25 @@ class GridBuilding(ActBuilding):
         if self.unit_type == UnitTypeId.FUSIONCORE:
             return self.building_progress(UnitTypeId.STARPORT)
 
+        # Zerg:
+        if self.unit_type == UnitTypeId.BANELINGNEST:
+            return self.building_progress(UnitTypeId.SPAWNINGPOOL)
+        if self.unit_type == UnitTypeId.ROACHWARREN:
+            return self.building_progress(UnitTypeId.SPAWNINGPOOL)
+        if self.unit_type == UnitTypeId.SPORECRAWLER:
+            return self.building_progress(UnitTypeId.SPAWNINGPOOL)
+        if self.unit_type == UnitTypeId.SPINECRAWLER:
+            return self.building_progress(UnitTypeId.SPAWNINGPOOL)
+        if self.unit_type == UnitTypeId.HYDRALISKDEN:
+            return self.building_progress(UnitTypeId.LAIR)
+        if self.unit_type == UnitTypeId.SPIRE:
+            return self.building_progress(UnitTypeId.LAIR)
+        if self.unit_type == UnitTypeId.INFESTATIONPIT:
+            return self.building_progress(UnitTypeId.LAIR)
+        if self.unit_type == UnitTypeId.NYDUSNETWORK:
+            return self.building_progress(UnitTypeId.LAIR)
+        if self.unit_type == UnitTypeId.LURKERDENMP:
+            return self.building_progress(UnitTypeId.HYDRALISKDEN)
+        if self.unit_type == UnitTypeId.ULTRALISKCAVERN:
+            return self.building_progress(UnitTypeId.HIVE)
         return 0
