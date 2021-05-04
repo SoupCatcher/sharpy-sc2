@@ -91,7 +91,7 @@ class GridBuilding(ActBuilding):
         self.building_solver = self.knowledge.get_required_manager(IBuildingSolver)
         self.pather = self.knowledge.get_manager(PathingManager)
         self.income_calculator = self.knowledge.get_required_manager(IIncomeCalculator)
-        if self.unit_type != UnitTypeId.PYLON:
+        if self.knowledge.my_race == Race.Protoss and self.unit_type != UnitTypeId.PYLON:
             self.make_pylon: Optional[GridBuilding] = GridBuilding(UnitTypeId.PYLON, 0, 2)
             await self.make_pylon.start(knowledge)
 
