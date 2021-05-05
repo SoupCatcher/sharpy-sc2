@@ -2,14 +2,14 @@ import logging
 import sys
 import time
 
-from sc2 import BotAI, UnitTypeId, Result
-from sc2.constants import abilityid_to_unittypeid
+from sc2 import BotAI, UnitTypeId, AbilityId, Result
+from sc2.constants import abilityid_to_unittypeid, UpgradeId
 from sc2.game_data import Cost
 from sc2.unit_command import UnitCommand
 from sc2.units import Units
 from config import get_config, get_version
 from abc import abstractmethod, ABC
-from typing import TYPE_CHECKING, Optional, List
+from typing import TYPE_CHECKING, Optional, List, Union
 from sharpy.knowledges.knowledge import Knowledge
 
 
@@ -136,6 +136,11 @@ class SkeletonBot(BotAI, ABC):
 
     async def on_end(self, game_result: Result):
         await self.knowledge.on_end(game_result)
+
+    def can_afford(self, item_id: Union[UnitTypeId, UpgradeId, AbilityId], check_supply_cost: bool = True) -> bool:
+        """ Use knowledge.can_afford instead of bot_ai.can_afford, since the
+            latter takes reserved resources into account. """
+        return self.knowledge.can_afford(item_id, check_supply_cost)
 
     def do(
         self,
