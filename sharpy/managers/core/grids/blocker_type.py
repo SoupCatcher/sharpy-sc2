@@ -8,4 +8,5 @@ class BlockerType(enum.Enum):
     Building4x4 = 4
     Building5x5 = 5
     Building6x6 = 6
+    Hatchery5x5 = 7   # Also fill where the larva goes
     Minerals = 12

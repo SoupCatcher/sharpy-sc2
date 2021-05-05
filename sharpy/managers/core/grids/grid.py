@@ -71,6 +71,9 @@ class Grid:
     def fill_area(self, pos: Point2, fill_type: BlockerType, func):
         area = self.get_area(pos, fill_type)
         self.fill_rect(area, func)
+        if fill_type == BlockerType.Hatchery5x5:
+            larva = Rectangle(area.x + 1, area.y - 1, 3, 1)
+            self.fill_rect(larva, func)
 
     def get_area(self, position: Point2, fillType: BlockerType) -> Rectangle:
         x = math.floor(position.x)
@@ -89,6 +92,9 @@ class Grid:
             w = 4
             h = 4
         elif fillType == BlockerType.Building5x5:
+            w = 5
+            h = 5
+        elif fillType == BlockerType.Hatchery5x5:
             w = 5
             h = 5
         elif fillType == BlockerType.Building6x6:

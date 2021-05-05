@@ -7,6 +7,7 @@ from sc2.pixel_map import PixelMap
 from sc2.game_info import GameInfo
 
 import sc2
+from sc2 import Race
 from sc2.position import Point2, Point3
 from sc2.unit import Unit
 
@@ -105,7 +106,11 @@ class BuildGrid(Grid):
             return cell
 
         for zone in self.zone_manager.expansion_zones:
-            self.fill_area(zone.center_location, BlockerType.Building5x5, building_filler)
+            if ai.knowledge.my_race == Race.Zerg:
+                blocker_type = BlockerType.Hatchery5x5
+            else:
+                blocker_type = BlockerType.Building5x5
+            self.fill_area(zone.center_location, blocker_type, building_filler)
 
         for neutral_unit in ai.mineral_field:  # type: Unit
             self.fill_area(neutral_unit.position, BlockerType.Minerals, mineral_filler)
