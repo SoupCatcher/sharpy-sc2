@@ -43,6 +43,7 @@ class Step(ActBase):
             await self.skip_until.debug_draw()
 
     async def start(self, knowledge: "Knowledge"):
+        await super().start(knowledge)
         if self.requirement is not None:
             await self.start_component(self.requirement, knowledge)
         if self.action is not None:
