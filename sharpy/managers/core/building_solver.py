@@ -376,12 +376,6 @@ class BuildingSolver(ManagerBase, IBuildingSolver):
 
                     self.zerg_grid(pos)
 
-            if zone_color == ZoneArea.OwnMainZone:
-                # sort building by their distance to our main withing the main zone
-                self._building_positions.get(BuildArea.Building).sort(
-                    key=lambda p: p.distance_to_point2(self.ai.start_location)
-                )
-
     def massive_grid(self, pos):
         rect = Rectangle(pos.x, pos.y, 6, 9)
         unit_exit_rect = Rectangle(pos.x - 2, pos.y + 4, 2, 2)
