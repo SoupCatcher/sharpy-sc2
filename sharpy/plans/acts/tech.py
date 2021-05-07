@@ -96,7 +96,7 @@ class Tech(ActBase):
         if self.upgrade_type == UpgradeId.TERRANVEHICLEANDSHIPARMORSLEVEL3:
             return AbilityId.ARMORYRESEARCH_TERRANVEHICLEANDSHIPPLATINGLEVEL3
 
-        return self.ai._game_data.upgrades[self.upgrade_type.value].research_ability.id
+        return self.ai._game_data.upgrades[self.upgrade_type.value].research_ability.exact_id
 
     def already_pending_upgrade(self, builders: Units) -> float:
         if self.upgrade_type in self.ai.state.upgrades:
@@ -110,7 +110,7 @@ class Tech(ActBase):
 
         for structure in builders:
             for order in structure.orders:
-                if order.ability.id is creationAbilityID:
+                if order.ability.exact_id is creationAbilityID:
                     if level and order.ability.button_name[-1] != level:
                         return 0
                     return order.progress
