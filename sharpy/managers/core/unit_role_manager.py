@@ -74,8 +74,10 @@ class UnitRoleManager(ManagerBase):
     def clear_task(self, unit: Union[Unit, int]):
         if type(unit) is int:
             # Use current iteration of the unit
-            unit = self.cache.by_tag(unit)
+            tag  = unit
+            unit = self.cache.by_tag(tag)
             if unit is None:
+                self.had_task_set.discard(tag)
                 return  # Unit doesn't exist, do nothing
 
         for i in range(0, self.role_count):
@@ -83,6 +85,7 @@ class UnitRoleManager(ManagerBase):
                 self.roles[i].register_unit(unit)
             else:
                 self.roles[i].remove_unit(unit)
+        self.had_task_set.discard(unit.tag)
 
     def units(self, task: Union[int, UnitTask]) -> Units:
         return self.roles[task].units
@@ -266,8 +269,6 @@ class UnitRoleManager(ManagerBase):
 
         builders = left_over.filter(lambda unit: unit.is_constructing_scv)
         self.set_tasks(UnitTask.Building, builders)
-
-        self.had_task_set.clear()
 
     async def post_update(self):
         if self.debug:
