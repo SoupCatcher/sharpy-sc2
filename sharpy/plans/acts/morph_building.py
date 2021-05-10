@@ -13,6 +13,14 @@ class MorphBuilding(ActBase):
 
     async def execute(self) -> bool:
         target_count = self.cache.own(self.result_type).amount
+
+        if self.result_type == UnitTypeId.LAIR:
+          target_count += self.cache.own(UnitTypeId.HIVE).amount
+        elif self.result_type == UnitTypeId.HATCHERY:
+          target_count += self.cache.own(UnitTypeId.LAIR).amout + self.cache.own(UnitTypeId.HIVE).amount
+        elif self.result_type == UnitTypeId.SPIRE:
+          target_count += self.cache.own(UnitTypeId.GREATERSPIRE).amount
+
         start_buildings = self.cache.own(self.building_type).ready.sorted_by_distance_to(
             self.zone_manager.own_main_zone.center_location
         )
