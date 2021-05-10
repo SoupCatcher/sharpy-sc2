@@ -119,6 +119,7 @@ class Expand(ActBase):
         if expand_now:
             if self.ai.can_afford(self.townhall_type):
                 if await self.build_expansion(expand_here):
+                    self.set_worker(worker)
                     return False
             else:
                 self.possibly_move_worker(expand_here)
