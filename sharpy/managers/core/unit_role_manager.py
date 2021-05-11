@@ -270,6 +270,8 @@ class UnitRoleManager(ManagerBase):
         builders = left_over.filter(lambda unit: unit.is_constructing_scv)
         self.set_tasks(UnitTask.Building, builders)
 
+        self.had_task_set.clear()
+
     async def post_update(self):
         if self.debug:
             idle = len(self.roles[UnitTask.Idle].tags)
