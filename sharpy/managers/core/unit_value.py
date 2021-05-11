@@ -347,7 +347,7 @@ class UnitValue(ManagerBase, IUnitValues):
             UnitTypeId.LOCUSTMP: UnitData(0, 0, 0, 0.5),
             UnitTypeId.LOCUSTMPFLYING: UnitData(0, 0, 0, 0.5),
             UnitTypeId.ULTRALISK: UnitData(300, 200, 6, 6, features=[UnitFeature.HitsGround]),
-            UnitTypeId.OVERLORD: UnitData(100, 0, 0, 0.1, features=[UnitFeature.Flying]),
+            UnitTypeId.OVERLORD: UnitData(100, 0, 0, 0.1, 18, features=[UnitFeature.Flying]),
             UnitTypeId.OVERLORDCOCOON: UnitData(100, 0, 0, 0.1, features=[UnitFeature.Flying]),
             UnitTypeId.OVERLORDTRANSPORT: UnitData(100, 0, 0, 0.5, features=[UnitFeature.Flying]),
             UnitTypeId.TRANSPORTOVERLORDCOCOON: UnitData(100, 0, 0, 0.1, features=[UnitFeature.Flying]),
