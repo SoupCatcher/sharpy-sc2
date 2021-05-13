@@ -82,7 +82,7 @@ class MatchRunner:
         port = self.ladder_player2_port
         self.print(f"Staring client server with port {port}")
         KillableProcess(await self._launch("127.0.0.1", port, False))
-        time.sleep(5)
+        time.sleep(10)
         KillableProcess(await ladder_bot.join_game(opponent_id, portconfig=portconfig))
 
         # We'll have to host handle the rest
