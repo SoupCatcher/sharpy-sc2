@@ -117,6 +117,12 @@ class ActBase(Component, ABC):
 
         if pre_type == UnitTypeId.SUPPLYDEPOT:
             types = [UnitTypeId.SUPPLYDEPOT, UnitTypeId.SUPPLYDEPOTDROP, UnitTypeId.SUPPLYDEPOTLOWERED]
+        elif pre_type == UnitTypeId.HATCHERY:
+            types = [UnitTypeId.HATCHERY, UnitTypeId.LAIR, UnitTypeId.HIVE]
+        elif pre_type == UnitTypeId.LAIR:
+            types = [UnitTypeId.LAIR, UnitTypeId.HIVE]
+        elif pre_type == UnitTypeId.SPIRE:
+            types = [UnitTypeId.SPIRE, UnitTypeId.GREATERSPIRE]
         else:
             types = pre_type
 
