@@ -156,19 +156,29 @@ class ActBase(Component, ABC):
         """Calculates how many buildings there are already, including pending structures."""
         count = 0
 
-        type_count = self.cache.own(unit_type)
+        if unit_type == self.knowledge.my_worker_type:
+            # Use worker supply instead of the cache for workers, to account
+            # for workers inside gas buildings.
+            type_count           = self.ai.supply_workers
+            type_count_ready     = type_count
+            type_count_not_ready = 0
+        else:
+            type_units           = self.cache.own(unit_type)
+            type_count           = type_units.amount
+            type_count_ready     = type_units.ready.amount
+            type_count_not_ready = type_units.not_ready.amount
 
         if include_not_ready and include_pending:
             count += self.unit_pending_count(unit_type)
-            count += type_count.ready.amount
+            count += type_count_ready
         elif include_not_ready and not include_pending:
-            count += type_count.amount
+            count += type_count
         elif not include_not_ready and include_pending:
             count += self.unit_pending_count(unit_type)
-            count += type_count.amount - type_count.not_ready.amount
+            count += type_count - type_count_not_ready
         else:
             # Only and only ready
-            count += type_count.ready.amount
+            count += type_count_ready
 
         count = self.related_count(count, unit_type)
 
