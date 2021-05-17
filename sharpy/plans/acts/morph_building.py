@@ -35,7 +35,7 @@ class MorphBuilding(ActBase):
             return True
 
         for target in start_buildings:
-            if target.is_ready and target.tag not in ignore_tags:
+            if target.is_ready and target.is_idle and target.tag not in ignore_tags:
                 if self.knowledge.can_afford(self.ability_type):
                     target(self.ability_type, subtract_cost=True)
                 else:
