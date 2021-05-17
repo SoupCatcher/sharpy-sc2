@@ -110,7 +110,11 @@ class ActBase(Component, ABC):
         return positions
 
     def unit_pending_count(self, unit_type: UnitTypeId) -> float:
-        return self.ai.already_pending(unit_type)
+        pending = self.ai.already_pending(unit_type)
+        if unit_type == UnitTypeId.ZERGLING:
+          return pending * 2
+        else:
+          return pending
 
     def building_progress(self, pre_type: UnitTypeId):
         percentage = 0
