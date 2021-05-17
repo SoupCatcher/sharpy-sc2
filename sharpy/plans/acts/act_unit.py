@@ -53,30 +53,7 @@ class ActUnit(ActBase):
         return _builders
 
     def get_unit_count(self) -> int:
-        count = 0
-
-        for unit in self.ai.units:
-            if self.knowledge.unit_values.real_type(unit.type_id) == self.unit_type:
-                count += 1
-
-        if self.unit_type == self.knowledge.my_worker_type:
-            count = max(count, self.ai.supply_workers)
-
-        ability = self.ai._game_data.units[self.unit_type.value].creation_ability
-
-        if self.knowledge.my_race == Race.Zerg:
-            pending = sum([o.ability.id == ability.id for u in self.cache.own(UnitTypeId.EGG) for o in u.orders])
-            if self.unit_type == UnitTypeId.ZERGLING:
-                count += pending * 2
-            else:
-                count += pending
-
-        if self.unit_type == self.knowledge.my_worker_type:
-            count = max(self.ai.supply_workers, count)
-
-        count += sum([o.ability and o.ability.id == ability.id for u in self.builders for o in u.orders])
-
-        return count
+        return self.get_count(self.unit_type)
 
     @property
     def is_done(self) -> bool:
