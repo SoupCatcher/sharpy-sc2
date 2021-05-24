@@ -46,7 +46,7 @@ class ExtendedPower:
     def is_enough_for(self, enemies: "ExtendedPower", our_percentage: float = 1.1) -> bool:
         # reduce some variable from air / ground power so that we don't fight against 100 roach with
         # 20 stalkers and observer.
-        if self.power < 1:
+        if self.power <= 0:
             return False
 
         if (
