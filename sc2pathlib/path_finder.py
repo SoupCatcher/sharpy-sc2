@@ -10,16 +10,16 @@ def to_float2(original: Tuple[int, int]) -> Tuple[float, float]:
 
 class PathFinder:
     def __init__(self, maze: Union[List[List[int]], np.array]):
-        """ 
-        pathing values need to be integers to improve performance. 
+        """
+        pathing values need to be integers to improve performance.
         Initialization should be done with array consisting values of 0 and 1.
         """
         self._path_find = PathFind(maze)
         self.heuristic_accuracy = 1  # Octile distance
 
     def normalize_influence(self, value: int):
-        """ 
-        Normalizes influence to integral value.    
+        """
+        Normalizes influence to integral value.
         Influence does not need to be calculated each frame, but this quickly resets
         influence values to specified value without changing available paths.
         """
@@ -101,6 +101,13 @@ class PathFinder:
             return self._path_find.find_path_influence_large(start_int, end_int, self.heuristic_accuracy)
         return self._path_find.find_path_influence(start_int, end_int, self.heuristic_accuracy)
 
+    def find_path_closer_than(
+        self, start: Tuple[float, float], end: Tuple[float, float], distance: float = 3
+    ) -> Tuple[List[Tuple[int, int]], float]:
+        start_int = (int(round(start[0])), int(round(start[1])))
+        end_int = (int(round(end[0])), int(round(end[1])))
+        return self._path_find.find_path_closer_than(start_int, end_int, self.heuristic_accuracy, distance)
+
     def safest_spot(self, destination_center: Tuple[float, float], walk_distance: float) -> Tuple[Tuple[int, int], float]:
         destination_int = (round(destination_center[0]), round(destination_center[1]))
         return self._path_find.lowest_influence_walk(destination_int, walk_distance)
@@ -148,7 +155,7 @@ class PathFinder:
     def plot(self, path: List[Tuple[int, int]], image_name: str = "map", resize: int = 4):
         """
         Uses cv2 to draw current pathing grid.
-        
+
         requires opencv-python
 
         :param path: list of points to colorize

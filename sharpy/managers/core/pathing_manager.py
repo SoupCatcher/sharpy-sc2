@@ -1,5 +1,5 @@
 import logging
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Tuple, Union, Optional
 
 import numpy as np
 from math import floor
@@ -255,6 +255,15 @@ class PathingManager(ManagerBase):
             self.found_points.extend(path)
         return Point2((target[0], target[1]))
 
+    def find_path_closer_than(self, start: Point2, target: Point2, distance: float = 4, target_index: int = 20) -> Optional[Point2]:
+        result = self.path_finder_terrain.find_path_closer_than(start, target, distance)
+        path = result[0]
+        if not path:
+            return None
+        if target_index >= len(path):
+            return path[-1]
+        return path[target_index]
+
     def find_weak_influence_air(self, target: Point2, radius: float) -> Point2:
         pathing_result = self.map.lowest_influence_in_grid(MapType.Air, target, floor(radius))
         pos = pathing_result[0]
@@ -270,8 +279,8 @@ class PathingManager(ManagerBase):
         pos = pathing_result[0]
         return Point2((pos[0], pos[1]))
 
-    def find_influence_air_path(self, start: Point2, target: Point2) -> Point2:
-        result = self.map.find_path_influence(MapType.Air, start, target)
+    def find_influence_air_path(self, start: Point2, target: Point2, distance_from_target: float = 0) -> Point2:
+        result = self.map.find_path_influence(MapType.Air, start, target, distance_from_target=distance_from_target)
         path = result[0]
         target_index = 4
 
@@ -288,9 +297,10 @@ class PathingManager(ManagerBase):
         return Point2((target[0], target[1]))
 
     def find_influence_ground_path(
-        self, start: Point2, target: Point2, target_index: int = 5, map_type: MapType = MapType.Ground
+        self, start: Point2, target: Point2, target_index: int = 5, map_type: MapType = MapType.Ground,
+        distance_from_target: float = 0
     ) -> Point2:
-        result = self.map.find_path_influence(map_type, start, target)
+        result = self.map.find_path_influence(map_type, start, target, distance_from_target=distance_from_target)
         path = result[0]
 
         if len(path) < 1:
