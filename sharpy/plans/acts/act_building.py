@@ -5,6 +5,7 @@ from sc2 import UnitTypeId, AbilityId
 from sc2.position import Point2
 from sc2.unit import Unit
 
+from sharpy.managers.core.roles import UnitTask
 from .act_base import ActBase
 
 
@@ -17,6 +18,7 @@ class ActBuilding(ActBase):
 
         self.unit_type = unit_type
         self.to_count = to_count
+        self.builder = None
 
         super().__init__()
 
@@ -24,6 +26,7 @@ class ActBuilding(ActBase):
         count = self.get_count(self.unit_type)
 
         if count >= self.to_count:
+            self.clear_worker()
             return True  # Step is done
 
         unit = self.ai._game_data.units[self.unit_type.value]
@@ -44,7 +47,14 @@ class ActBuilding(ActBase):
         worker = self.get_worker_builder(location, 0)
         pos = await self.ai.find_placement(self.unit_type, location)
         if worker and pos:
+            self.builder = worker
+            self.roles.set_task(UnitTask.Building, worker)
             worker.build(self.unit_type, pos)
+
+    def clear_worker(self):
+        if self.builder:
+            self.roles.clear_task(self.builder)
+            self.builder = None
 
     def get_random_build_location(self) -> Point2:
         """Calculates building position."""
