@@ -141,12 +141,13 @@ class DefaultMicroMethods:
                     step.closest_units[unit.tag] = enemy_near
                     closest_distance = d
 
-                att_range = step.unit_values.real_range(enemy_near, unit)
-                step.enemy_attack_range += att_range
-                enemy_attack_range_count += 1
-                if not engage_added and d < att_range:
-                    engage_count += 1
-                    engage_added = True
+                if enemy_near.can_attack:
+                    att_range = step.unit_values.real_range(enemy_near, unit)
+                    step.enemy_attack_range += att_range
+                    enemy_attack_range_count += 1
+                    if not engage_added and d < att_range:
+                        engage_count += 1
+                        engage_added = True
 
                 att_range = step.unit_values.real_range(unit, enemy_near)
                 step.attack_range += att_range
