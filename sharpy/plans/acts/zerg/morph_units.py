@@ -49,11 +49,7 @@ class MorphUnit(ActBase):
 
                 target_count += 1
 
-                if target_count >= self.target_count:
-                    return True
-        if start_units:
-            return False
-        return True
+        return False
 
 
 class MorphRavager(MorphUnit):
