@@ -136,8 +136,8 @@ class MemoryManager(ManagerBase, IMemoryManager):
         memory_units = self.ghost_units
 
         # Merge enemy data with memories
-        self.ai.enemy_units = self.ai.enemy_units + memory_units
-        self.ai.all_enemy_units = self.ai.all_enemy_units + memory_units
+        self.ai.enemy_units.extend(memory_units)
+        self.ai.all_enemy_units.extend(memory_units)
 
     def clear_unit_cache(self, memory_tags_to_remove, unit_tag):
         memory_tags_to_remove.append(unit_tag)
