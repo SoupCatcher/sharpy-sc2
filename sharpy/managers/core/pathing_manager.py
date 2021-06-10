@@ -140,11 +140,7 @@ class PathingManager(ManagerBase):
 
         self.map.normalize_influence(20)
 
-        for enemy_type in self.cache.enemy_unit_cache:  # type: UnitTypeId
-            enemies: Units = self.cache.enemy_unit_cache.get(enemy_type, Units([], self.ai))
-            if len(enemies) == 0:
-                continue
-
+        for enemy_type, enemies in self.cache.enemy_unit_cache.items():
             example_enemy: Unit = enemies[0]
             power.clear()
             power.add_unit(enemy_type, 100)
