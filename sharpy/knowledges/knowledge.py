@@ -180,8 +180,8 @@ class Knowledge:
         return self.ai.vespene - self.reserved_gas
 
     def reserve(self, minerals: int, gas: int):
-        self.reserved_minerals += minerals
-        self.reserved_gas += gas
+        self.reserved_minerals += max(0, minerals)
+        self.reserved_gas += max(0, gas)
 
     def reserve_costs(self, item_id: sc2.Union[UnitTypeId, UpgradeId, AbilityId]):
         if isinstance(item_id, UnitTypeId):
