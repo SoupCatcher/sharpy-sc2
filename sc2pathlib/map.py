@@ -162,8 +162,11 @@ class Sc2Map:
         self._map.add_influence_without_zones(zones, int(value))
 
     def find_path(
-        self, map_type: MapType, start: Tuple[float, float], end: Tuple[float, float], large: bool = False,
-        distance_from_target: float = 0
+        self, map_type: MapType, start: Tuple[float, float], end: Tuple[float, float],
+        large: bool = False,
+        influence: bool = False,
+        window: Optional[Tuple[Tuple[float, float], Tuple[float, float]]] = None,
+        distance_from_target: Optional[float] = None
     ) -> Tuple[List[Tuple[int, int]], float]:
         """
         Finds a path ignoring influence.
@@ -171,41 +174,14 @@ class Sc2Map:
         :param start: Start position in float tuple
         :param end: Start position in float tuple
         :param large: Unit is large and requires path to have width of 2 to pass
-        :param distance_from_target: How close do we need to get to the target
+        :param influence: Account for enemy influence
+        :param window: Restrict path finding to the given window
+        :param distance_from_target: Short circuit when finding a point closer
+            than the given distance from the target
         :return: Tuple of points and total distance.
         """
 
-        if distance_from_target == 0:
-            if large:
-                return self._map.find_path_large(map_type, start, end, self.heuristic_accuracy)
-            return self._map.find_path(map_type, start, end, self.heuristic_accuracy)
-        else:
-            if large:
-                return self._map.find_path_large_closer_than(map_type, start, end, self.heuristic_accuracy, distance_from_target)
-            return self._map.find_path_closer_than(map_type, start, end, self.heuristic_accuracy, distance_from_target)
-
-    def find_path_influence(
-        self, map_type: MapType, start: Tuple[float, float], end: Tuple[float, float], large: bool = False,
-        distance_from_target: float = 0
-    ) -> Tuple[List[Tuple[int, int]], float]:
-        """
-        Finds a path that takes influence into account
-
-        :param start: Start position in float tuple
-        :param end: Start position in float tuple
-        :param large: Unit is large and requires path to have width of 2 to pass
-        :param distance_from_target: How close do we need to get to the target
-        :return: Tuple of points and total distance including influence.
-        """
-
-        if distance_from_target == 0:
-            if large:
-                return self._map.find_path_influence_large(map_type, start, end, self.heuristic_accuracy)
-            return self._map.find_path_influence(map_type, start, end, self.heuristic_accuracy)
-        else:
-            if large:
-                return self._map.find_path_influence_large_closer_than(map_type, start, end, self.heuristic_accuracy, distance_from_target)
-            return self._map.find_path_influence_closer_than(map_type, start, end, self.heuristic_accuracy, distance_from_target)
+        return self._map.find_path(map_type, start, end, large, influence, self.heuristic_accuracy, window, distance_from_target)
 
     def safest_spot(
         self, map_type: MapType, destination_center: Tuple[float, float], walk_distance: float
@@ -248,6 +224,8 @@ class Sc2Map:
         image = np.array(self._map.draw_climbs(), dtype=np.uint8)
         image = np.multiply(image, 42)
         self.plot_image(image, image_name, resize)
+
+
 
     def plot_ground_map(self, path: List[Tuple[int, int]], image_name: str = "ground_map", resize: int = 4):
         image = np.array(self._map.ground_pathing, dtype=np.uint8)

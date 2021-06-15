@@ -138,7 +138,7 @@ class PathingManager(ManagerBase):
                 self.map.create_block(building.position, (5, 3))
                 self.map.create_block(building.position, (3, 5))
 
-        self.map.normalize_influence(20)
+        self.map.normalize_influence(100)
 
         for enemy_type, enemies in self.cache.enemy_unit_cache.items():
             example_enemy: Unit = enemies[0]
@@ -235,8 +235,23 @@ class PathingManager(ManagerBase):
             return 1000  # No path
         return result[1]
 
-    def find_path(self, start: Point2, target: Point2, target_index: int = 20) -> Point2:
-        result = self.path_finder_terrain.find_path(start, target)
+    def _default_window(self, start: Point2, target: Point2) -> Tuple[Tuple[float, float], Tuple[float, float]]:
+        d = max(10, abs(target.x - start.x) + abs(target.y - start.y))
+        x0 = self.ai.game_info.playable_area.x
+        x1 = x0 + self.ai.game_info.playable_area.width
+        y0 = self.ai.game_info.playable_area.y
+        y1 = y0 + self.ai.game_info.playable_area.height
+        return ((max(x0, min(target.x, start.x) - d),
+                 max(y0, min(target.y, start.y) - d)),
+                (min(x1, max(target.x, start.x) + d),
+                 min(y1, max(target.y, start.y) + d)))
+
+    def find_path(self, start: Point2, target: Point2, target_index: int = 20,
+                  window: Optional[Tuple[Tuple[float, float], Tuple[float, float]]] = None,
+                  distance_from_target: float = None) -> Point2:
+        if window is None:
+            window = self._default_window(start, target)
+        result = self.path_finder_terrain.find_path(start, target, window=window, distance_from_target=distance_from_target)
         path = result[0]
 
         if len(path) < 1:
@@ -250,15 +265,6 @@ class PathingManager(ManagerBase):
         if self.debug:
             self.found_points.extend(path)
         return Point2((target[0], target[1]))
-
-    def find_path_closer_than(self, start: Point2, target: Point2, distance: float = 4, target_index: int = 20) -> Optional[Point2]:
-        result = self.path_finder_terrain.find_path_closer_than(start, target, distance)
-        path = result[0]
-        if not path:
-            return None
-        if target_index >= len(path):
-            return path[-1]
-        return path[target_index]
 
     def find_weak_influence_air(self, target: Point2, radius: float) -> Point2:
         pathing_result = self.map.lowest_influence_in_grid(MapType.Air, target, floor(radius))
@@ -276,7 +282,7 @@ class PathingManager(ManagerBase):
         return Point2((pos[0], pos[1]))
 
     def find_influence_air_path(self, start: Point2, target: Point2, distance_from_target: float = 0) -> Point2:
-        result = self.map.find_path_influence(MapType.Air, start, target, distance_from_target=distance_from_target)
+        result = self.map.find_path(MapType.Air, start, target, influence=True, distance_from_target=distance_from_target)
         path = result[0]
         target_index = 4
 
@@ -292,11 +298,26 @@ class PathingManager(ManagerBase):
             self.found_points_air.extend(path)
         return Point2((target[0], target[1]))
 
+    def is_ground_path(
+        self, start: Point2, target: Point2, map_type: MapType = MapType.Ground,
+        window: Optional[Tuple[Tuple[float, float], Tuple[float, float]]] = None,
+        distance_from_target: float = None,
+    ) -> bool:
+        if window is None:
+            window = self._default_window(start, target)
+
+        path, _ = self.map.find_path(map_type, start, target, influence=True, window=window, distance_from_target=distance_from_target)
+        return len(path) > 0
+
     def find_influence_ground_path(
         self, start: Point2, target: Point2, target_index: int = 5, map_type: MapType = MapType.Ground,
-        distance_from_target: float = 0
+        window: Optional[Tuple[Tuple[float, float], Tuple[float, float]]] = None,
+        distance_from_target: float = None,
     ) -> Point2:
-        result = self.map.find_path_influence(map_type, start, target, distance_from_target=distance_from_target)
+        if window is None:
+            window = self._default_window(start, target)
+
+        result = self.map.find_path(map_type, start, target, influence=True, window=window, distance_from_target=distance_from_target)
         path = result[0]
 
         if len(path) < 1:
@@ -308,7 +329,7 @@ class PathingManager(ManagerBase):
 
         target = path[target_index]
         if self.debug:
-            self.found_points_air.extend(path)
+            self.found_points.extend(path)
         return Point2((target[0], target[1]))
 
     def find_low_inside_ground(
