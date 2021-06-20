@@ -32,6 +32,7 @@ class GroupCombatManager(ManagerBase, ICombatManager):
         self.pather: PathingManager = self.knowledge.pathing_manager
         self._tags: List[int] = []
         self.all_enemy_power = ExtendedPower(self.unit_values)
+        self.all_our_power = ExtendedPower(self.unit_values)
 
         await self.default_rules.start(knowledge)
 
@@ -77,6 +78,7 @@ class GroupCombatManager(ManagerBase, ICombatManager):
         if unit.type_id in ignored:  # Just no
             return
 
+        self.all_our_power.add_unit(unit)
         self._tags.append(unit.tag)
 
     def add_units(self, units: Units):
@@ -109,6 +111,7 @@ class GroupCombatManager(ManagerBase, ICombatManager):
         self.rules.handle_groups_func(self, target, move_type)
 
         self._tags.clear()
+        self.all_our_power.clear()
 
     def faster_group_should_regroup(self, group1: CombatUnits, group2: Optional[CombatUnits]) -> bool:
         if not group2:
