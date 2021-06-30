@@ -263,7 +263,7 @@ class UnitValue(ManagerBase, IUnitValues):
                 75, 25, 2, 2, features=[UnitFeature.HitsGround, UnitFeature.ShootsAir]
             ),
             UnitTypeId.SIEGETANK: UnitData(150, 125, 3, 3, features=[UnitFeature.HitsGround]),
-            UnitTypeId.SIEGETANKSIEGED: UnitData(150, 125, 3, 3, features=[UnitFeature.HitsGround]),
+            UnitTypeId.SIEGETANKSIEGED: UnitData(150, 125, 3, 4, features=[UnitFeature.HitsGround]),
             UnitTypeId.CYCLONE: UnitData(150, 100, 3, 3, features=[UnitFeature.HitsGround, UnitFeature.ShootsAir]),
             UnitTypeId.THOR: UnitData(300, 200, 6, 6, features=[UnitFeature.HitsGround, UnitFeature.ShootsAir]),
             UnitTypeId.VIKING: UnitData(
