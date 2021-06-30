@@ -631,7 +631,7 @@ class UnitValue(ManagerBase, IUnitValues):
         return self.power_by_type(unit.type_id, health_percentage)
 
     def power_by_type(self, type_id: UnitTypeId, health_percentage: float = 1) -> float:
-        unit_value = self.unit_data.get(type_id, None)
+        unit_value = self.unit_data.get(self.real_type(type_id), None)
         if unit_value is not None:
             return unit_value.combat_value * health_percentage
         return 1.0 * health_percentage
