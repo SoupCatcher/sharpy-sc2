@@ -46,6 +46,7 @@ class IfElse(ActBase):
             await self.skip_until.debug_draw()
 
     async def start(self, knowledge: "Knowledge"):
+        await super().start(knowledge)
         await self.start_component(self.condition, knowledge)
         await self.start_component(self.action, knowledge)
         if self.action_else is not None:
