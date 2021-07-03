@@ -281,13 +281,13 @@ class PathingManager(ManagerBase):
         pos = pathing_result[0]
         return Point2((pos[0], pos[1]))
 
-    def find_influence_air_path(self, start: Point2, target: Point2, distance_from_target: float = 0) -> Point2:
+    def find_influence_air_path(self, start: Point2, target: Point2, distance_from_target: float = None) -> Point2:
         result = self.map.find_path(MapType.Air, start, target, influence=True, distance_from_target=distance_from_target)
         path = result[0]
         target_index = 4
 
         if len(path) < 1:
-            self.print(f"No path found {start}, {target}")
+            self.print(f"No air path found {start}, {target}")
             return target
 
         if len(path) <= target_index:
@@ -321,7 +321,7 @@ class PathingManager(ManagerBase):
         path = result[0]
 
         if len(path) < 1:
-            self.print(f"No path found {start}, {target}")
+            self.print(f"No ground path found {start}, {target}")
             return target
 
         if len(path) <= target_index:
