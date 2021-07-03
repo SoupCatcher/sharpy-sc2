@@ -40,6 +40,7 @@ class MorphBuilding(ActBase):
                     target(self.ability_type, subtract_cost=True)
                 else:
                     self.knowledge.reserve_costs(self.ability_type)
+                    return False
 
                 target_count += 1
 
