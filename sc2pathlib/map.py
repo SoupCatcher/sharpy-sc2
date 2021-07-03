@@ -19,7 +19,7 @@ class Sc2Map:
 
         self._overlord_spots: Optional[List[Tuple[float, float]]] = None
         self._chokes: Optional[List[Choke]] = None
-        self.heuristic_accuracy = 1  # Octile distance / set to 2 for optimal accuracy but less performance
+        self.heuristic_accuracy = 2  # Octile distance / set to 2 for optimal accuracy but less performance
 
         self.height_map = height_map
         self._map = Map(
