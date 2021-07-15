@@ -495,6 +495,7 @@ class UnitValue(ManagerBase, IUnitValues):
             UnitTypeId.VOIDRAY: lambda u: 6,
             UnitTypeId.WIDOWMINEBURROWED: lambda u: 5,
             UnitTypeId.ORACLESTASISTRAP: lambda u: 5,
+            UnitTypeId.BUNKER: lambda u: 5,
         }
 
         self._air_range_dict: Dict[UnitTypeId, Callable[[Unit], float]] = {
@@ -504,6 +505,7 @@ class UnitValue(ManagerBase, IUnitValues):
             UnitTypeId.SENTRY: lambda u: 5,
             UnitTypeId.VOIDRAY: lambda u: 6,
             UnitTypeId.WIDOWMINEBURROWED: lambda u: 5,
+            UnitTypeId.BUNKER: lambda u: 5,
         }
 
         def lurker_range(unit: Unit):
