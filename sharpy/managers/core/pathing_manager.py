@@ -1,4 +1,5 @@
 import logging
+import itertools
 from typing import Dict, List, Tuple, Union, Optional
 
 import numpy as np
@@ -129,7 +130,7 @@ class PathingManager(ManagerBase):
         self.set_rocks(self.path_finder_terrain)
         self.set_rocks(self.map)
 
-        for building in self.ai.structures + self.ai.enemy_structures:  # type: Unit
+        for building in itertools.chain(self.ai.structures, self.ai.enemy_structures):  # type: Unit
             if building.type_id in buildings_2x2:
                 self.map.create_block(building.position, (2, 2))
             elif building.type_id in buildings_3x3:
