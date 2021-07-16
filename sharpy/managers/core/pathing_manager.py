@@ -148,7 +148,7 @@ class PathingManager(ManagerBase):
 
             if self.unit_values.can_shoot_air(example_enemy):
                 positions: List[Point2] = [unit.position for unit in enemies]  # need to be specified in both places
-                s_range = self.unit_values.air_range(example_enemy)
+                s_range = self.unit_values.air_range(example_enemy) + example_enemy.radius
 
                 if example_enemy.type_id == UnitTypeId.CYCLONE:
                     s_range = 7
@@ -157,7 +157,7 @@ class PathingManager(ManagerBase):
 
             if self.unit_values.can_shoot_ground(example_enemy):
                 positions = [unit.position for unit in enemies]  # need to be specified in both places
-                s_range = self.unit_values.ground_range(example_enemy)
+                s_range = self.unit_values.ground_range(example_enemy) + example_enemy.radius
                 if example_enemy.type_id == UnitTypeId.CYCLONE:
                     s_range = 15  # lock on break range
                 if example_enemy.type_id == UnitTypeId.SIEGETANKSIEGED:
