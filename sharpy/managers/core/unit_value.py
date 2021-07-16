@@ -495,7 +495,7 @@ class UnitValue(ManagerBase, IUnitValues):
             UnitTypeId.VOIDRAY: lambda u: 6,
             UnitTypeId.WIDOWMINEBURROWED: lambda u: 5,
             UnitTypeId.ORACLESTASISTRAP: lambda u: 5,
-            UnitTypeId.BUNKER: lambda u: 5,
+            UnitTypeId.BUNKER: lambda u: 6,      # Marines have 5 range + 1 bonus range in bunker
         }
 
         self._air_range_dict: Dict[UnitTypeId, Callable[[Unit], float]] = {
@@ -505,7 +505,8 @@ class UnitValue(ManagerBase, IUnitValues):
             UnitTypeId.SENTRY: lambda u: 5,
             UnitTypeId.VOIDRAY: lambda u: 6,
             UnitTypeId.WIDOWMINEBURROWED: lambda u: 5,
-            UnitTypeId.BUNKER: lambda u: 5,
+            UnitTypeId.BUNKER: lambda u: 6,
+            UnitTypeId.MISSILETURRET: lambda u: u.air_range + 1,     # Account for possible range upgrade
         }
 
         def lurker_range(unit: Unit):
