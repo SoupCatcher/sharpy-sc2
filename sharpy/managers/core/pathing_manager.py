@@ -153,10 +153,7 @@ class PathingManager(ManagerBase):
                 if example_enemy.type_id == UnitTypeId.CYCLONE:
                     s_range = 7
 
-                if example_enemy.is_structure:
-                    self.map.add_pure_ground_influence(positions, power.air_power, s_range, s_range)
-                else:
-                    self.map.add_air_influence(positions, power.air_power, s_range, s_range + 3)
+                self.map.add_air_influence(positions, power.air_power, s_range, s_range + 3)
 
             if self.unit_values.can_shoot_ground(example_enemy):
                 positions = [unit.position for unit in enemies]  # need to be specified in both places
@@ -167,8 +164,6 @@ class PathingManager(ManagerBase):
                     self.map.add_tank_influence(positions, power.ground_power)
                 elif s_range < 2:
                     self.map.add_walk_influence(positions, power.ground_power, 7)
-                elif example_enemy.is_structure:
-                    self.map.add_pure_ground_influence(positions, power.ground_power, s_range, s_range)
                 elif s_range < 5:
                     self.map.add_pure_ground_influence(positions, power.ground_power, s_range, 7)
                 else:
