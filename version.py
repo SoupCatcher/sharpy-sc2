@@ -7,9 +7,9 @@ import subprocess
 
 def update_version_txt():
     try:
-        commit_hash = subprocess.check_output("git rev-parse --short HEAD", stderr=subprocess.STDOUT).decode().strip()
+        commit_hash = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"], stderr=subprocess.STDOUT).decode().strip()
         commit_date = (
-            subprocess.check_output("git log -1 --date=short --pretty=format:%cd", stderr=subprocess.STDOUT)
+            subprocess.check_output(["git", "log", "-1", "--date=short", "--pretty=format:%cd"], stderr=subprocess.STDOUT)
             .decode()
             .strip()
         )
