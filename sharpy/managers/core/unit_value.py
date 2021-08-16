@@ -243,7 +243,7 @@ class UnitValue(ManagerBase, IUnitValues):
     def __init__(self):
         # By storing data in the instance, can skip import conflicts.
         super().__init__()
-        self.combat_ignore = {UnitTypeId.LARVA} | self.not_really_structure
+        self.combat_ignore = {UnitTypeId.LARVA, UnitTypeId.EGG} | self.not_really_structure
         self._enemy_worker_type: Optional[UnitTypeId] = None
         self.init_range_dicts()
 
