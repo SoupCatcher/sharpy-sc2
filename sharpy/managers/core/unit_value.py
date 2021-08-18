@@ -557,12 +557,12 @@ class UnitValue(ManagerBase, IUnitValues):
         """Returns boolean whether unit should participate in an attack. Ignores structures, workers and other non attacking types."""
         if unit.type_id in self.combat_ignore:
             return False
-        if self.ai.race == Race.Zerg and unit.type_id == UnitTypeId.QUEEN:
-            return False
         if (
             unit.type_id == UnitTypeId.INTERCEPTOR
             or unit.type_id == UnitTypeId.ADEPTPHASESHIFT
             or unit.type_id == UnitTypeId.MULE
+            or unit.type_id == UnitTypeId.QUEEN
+            or unit.type_id == UnitTypeId.OVERLORD
         ):
             return False
         return not unit.is_structure and unit.type_id not in self.worker_types
