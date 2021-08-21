@@ -79,17 +79,9 @@ class CombatUnits:
         start = self.center
         best_distance = 50  # doesn't find enemy groups closer than this
 
-        shoots_air = self.power.air_power > 0
-        shoots_ground = self.power.ground_power > 0
-
         for combat_group in combat_groups:
-            if not combat_group.ground_units and not shoots_air:
-                continue  # We can't shoot the targets here
-            if combat_group.power.air_presence == 0 and combat_group.power.ground_presence > 0 and not shoots_ground:
-                continue  # We can't shoot the targets here
-
-            if combat_group.power.air_presence > 0 and combat_group.power.ground_presence == 0 and not shoots_air:
-                continue  # We can't shoot the targets here
+            if not self.can_target(combat_group):
+                continue
 
             center = combat_group.center
 
@@ -99,3 +91,7 @@ class CombatUnits:
                 group = combat_group
 
         return group
+
+    def can_target(self, combat_group: "CombatUnits") -> bool:
+        return (self.power.air_power > 0 and combat_group.power.air_presence > 0
+                or self.power.ground_power > 0 and combat_group.power.ground_presence > 0)
