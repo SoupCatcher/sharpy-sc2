@@ -129,6 +129,7 @@ Builds:
         parser.add_argument(
             "--requirewin", help="Requires victory for the specified player number (1 or 2) or raise exception."
         )
+        parser.add_argument("--seed", help="Random seed", default=None)
 
         args = parser.parse_args()
 
@@ -195,6 +196,8 @@ Builds:
         print(f"Starting game in {map_name}.")
         print(f"{player1} vs {player2}")
 
+        seed = args.seed if args.seed is None else int(args.seed)
+
         runner = MatchRunner()
         result = runner.run_game(
             maps.get(map_name),
@@ -204,6 +207,7 @@ Builds:
             game_time_limit=(30 * 60),
             save_replay_as=f"{folder}/{file_name}.SC2Replay",
             start_port=args.port,
+            random_seed=seed,
         )
 
         if args.requirewin:
