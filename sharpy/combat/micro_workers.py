@@ -23,6 +23,8 @@ class MicroWorkers(MicroStep):
         return current_command
 
     def unit_solve_combat(self, unit: Unit, current_command: Action) -> Action:
+        if self.move_type == MoveType.PanicRetreat:
+            return current_command
         if self.closest_group and self.engaged_power.melee_percentage > 0.9:
             backstep: Point2 = unit.position.towards(self.closest_group.center, -3)
             if (unit.health + unit.shield <= 5 and not self.ready_to_shoot(unit)) or (
