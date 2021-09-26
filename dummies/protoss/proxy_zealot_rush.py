@@ -212,24 +212,21 @@ class ProxyZealotRushBot(KnowledgeBot):
             ),
         )
         proxy = BuildOrder(
-            [
-                ProtossUnit(UnitTypeId.PROBE, 17),
-                ProtossUnit(UnitTypeId.ZEALOT),
-                GridBuilding(UnitTypeId.PYLON, 1, priority=True),
-                Step(UnitReady(UnitTypeId.PYLON, 1), AutoPylon()),
-                ProxyZealots(),
-                ChronoUnit(UnitTypeId.ZEALOT, UnitTypeId.GATEWAY),
-                [
-                    DistributeWorkers(),
-                    Step(None, SpeedMining(), lambda ai: ai.client.game_step > 5),
-                    PlanZoneDefense(),
-                    PlanZoneGather(),
-                    attack,
-                    PlanFinishEnemy(),
-                ],
-            ]
+            ProtossUnit(UnitTypeId.PROBE, 17),
+            ProtossUnit(UnitTypeId.ZEALOT),
+            GridBuilding(UnitTypeId.PYLON, 1, priority=True),
+            Step(UnitReady(UnitTypeId.PYLON, 1), AutoPylon()),
+            ProxyZealots(),
+            ChronoUnit(UnitTypeId.ZEALOT, UnitTypeId.GATEWAY),
         )
-        return BuildOrder(SequentialList(Step(None, proxy, skip=Once(Supply(50))), backup))
+        return BuildOrder(SequentialList(Step(None, proxy, skip=Once(Supply(50))), backup),
+                          DistributeWorkers(),
+                          Step(None, SpeedMining(), lambda ai: ai.client.game_step > 5),
+                          PlanZoneDefense(),
+                          PlanZoneGather(),
+                          attack,
+                          PlanFinishEnemy(),
+                          )
 
 
 class LadderBot(ProxyZealotRushBot):
