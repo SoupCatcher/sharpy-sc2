@@ -346,8 +346,8 @@ class GridBuilding(ActBuilding):
     def is_on_creep(self, creep: PixelMap, point: Point2) -> bool:
         x_original = floor(point.x) - 1
         y_original = floor(point.y) - 1
-        for x in range(x_original, x_original + 5):
-            for y in range(y_original, y_original + 5):
+        for x in range(x_original, x_original + 3):
+            for y in range(y_original, y_original + 3):
                 if not creep.is_set(Point2((x, y))):
                     return False
         return True
