@@ -204,7 +204,7 @@ Builds:
             [player1_bot, player2_bot],
             player1_id=player1,
             realtime=args.real_time,
-            game_time_limit=(30 * 60),
+            game_time_limit=(8 * 60 * 60),
             save_replay_as=f"{folder}/{file_name}.SC2Replay",
             start_port=args.port,
             random_seed=seed,
