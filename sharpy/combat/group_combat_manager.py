@@ -13,6 +13,8 @@ from sc2.unit import Unit
 import numpy as np
 from sklearn.cluster import DBSCAN
 
+from sc2pathlib import MapType
+
 ignored = {UnitTypeId.MULE, UnitTypeId.LARVA, UnitTypeId.EGG}
 
 
@@ -137,10 +139,15 @@ class GroupCombatManager(ManagerBase, ICombatManager):
     def action_to(self, group: CombatUnits, target, move_type: MoveType, is_attack: bool):
         original_target = target
         if isinstance(target, Point2) and group.ground_units:
-            if move_type in {MoveType.DefensiveRetreat, MoveType.PanicRetreat}:
-                target = self.pather.find_influence_ground_path(group.center, target, 14)
+            if all(u.is_flying for u in group.units):
+                map_type = MapType.Air
+            elif all(u.type_id == UnitTypeId.REAPER for u in group.units):
+                map_type = MapType.Reaper
+            elif all(u.type_id == UnitTypeId.COLOSSUS for u in group.units):
+                map_type = MapType.Colossus
             else:
-                target = self.pather.find_path(group.center, target, 14)
+                map_type = MapType.Ground
+            target = self.pather.find_influence_ground_path(group.center, target, 14, map_type=map_type)
 
         own_unit_cache: Dict[UnitTypeId, Units] = {}
 
