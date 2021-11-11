@@ -183,6 +183,10 @@ class Knowledge:
         self.reserved_minerals += max(0, minerals)
         self.reserved_gas += max(0, gas)
 
+    def unreserve(self, minerals: int, gas: int):
+        self.reserved_minerals -= max(0, minerals)
+        self.reserved_gas -= max(0, gas)
+
     def reserve_costs(self, item_id: sc2.Union[UnitTypeId, UpgradeId, AbilityId]):
         if isinstance(item_id, UnitTypeId):
             unit = self.ai._game_data.units[item_id.value]
