@@ -15,6 +15,6 @@ class Gas(RequireBase):
         self.vespene_requirement = vespene_requirement
 
     def check(self) -> bool:
-        if self.ai.vespene > self.vespene_requirement:
+        if self.ai.vespene >= self.vespene_requirement:
             return True
         return False

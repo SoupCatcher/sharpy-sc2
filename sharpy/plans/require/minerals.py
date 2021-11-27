@@ -12,6 +12,6 @@ class Minerals(RequireBase):
         self.mineralRequirement = mineral_requirement
 
     def check(self) -> bool:
-        if self.ai.minerals > self.mineralRequirement:
+        if self.ai.minerals >= self.mineralRequirement:
             return True
         return False
