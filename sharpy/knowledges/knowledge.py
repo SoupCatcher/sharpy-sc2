@@ -232,8 +232,8 @@ class Knowledge:
             unit = self.previous_units_manager.last_unit(unit_tag)
             if unit:
                 self.fire_event(self._on_unit_destroyed_listeners, UnitDestroyedEvent(unit_tag, unit))
-            else:
-                self.print(f"Unknown unit destroyed: {unit_tag}", log_level=logging.DEBUG)
+            # else:
+            #     self.print(f"Unknown unit destroyed: {unit_tag}", log_level=logging.DEBUG)
 
     # todo: if this is useful, it should be refactored as a more general solution
 
