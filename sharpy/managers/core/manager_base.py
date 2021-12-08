@@ -1,6 +1,5 @@
 import logging
 import string
-from abc import ABC, abstractmethod
 
 from sc2 import Result, UnitTypeId
 
@@ -15,15 +14,13 @@ if TYPE_CHECKING:
     from sharpy.managers.core import UnitCacheManager, UnitValue
 
 
-class ManagerBase(ABC, Component):
-    @abstractmethod
+class ManagerBase(Component):
     async def update(self):
         pass
 
     def real_type(self, type_id: UnitTypeId) -> UnitTypeId:
         return self.unit_values.real_type(type_id)
 
-    @abstractmethod
     async def post_update(self):
         pass
 
