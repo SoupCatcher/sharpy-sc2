@@ -36,6 +36,7 @@ class Component:
         self.parent_key: Optional[str] = None
         self._key: Optional[str] = None
         self.__cache_key: Optional[str] = None
+        self._printed = dict()
 
     @property
     def key(self) -> str:
@@ -70,7 +71,11 @@ class Component:
         self.zone_manager = self.knowledge.zone_manager
         self.cd_manager = knowledge.cooldown_manager
 
-    def print(self, msg: str, stats: bool = True, log_level=logging.INFO):
+    def print(self, msg: str, stats: bool = True, log_level=logging.INFO, on_change=None):
+        if on_change is not None:
+            if msg == self._printed.get(on_change, None):
+                return
+            self._printed[on_change] = msg
         self.knowledge.print(msg, type(self).__name__, stats, log_level)
 
     async def start_component(self, component: "Component", knowledge: "Knowledge"):
