@@ -197,7 +197,7 @@ class Knowledge:
             cost = self.ai._game_data.calculate_ability_cost(item_id)
         self.reserve(cost.minerals, cost.vespene)
 
-    def can_afford(self, item_id: sc2.Union[UnitTypeId, UpgradeId, AbilityId], check_supply_cost: bool = True) -> bool:
+    def can_afford(self, item_id: sc2.Union[UnitTypeId, UpgradeId, AbilityId], check_supply_cost: bool = True, ignore_reserved=False) -> bool:
         """Tests if the player has enough resources to build a unit or cast an ability even after reservations."""
         enough_supply = True
         if isinstance(item_id, UnitTypeId):
@@ -209,8 +209,11 @@ class Knowledge:
             cost = self.ai._game_data.upgrades[item_id.value].cost
         else:
             cost = self.ai._game_data.calculate_ability_cost(item_id)
-        minerals = self.ai.minerals - self.reserved_minerals
-        gas = self.ai.vespene - self.reserved_gas
+        minerals = self.ai.minerals
+        gas = self.ai.vespene
+        if not ignore_reserved:
+            minerals -= self.reserved_minerals
+            gas -= self.reserved_gas
         return cost.minerals <= minerals and cost.vespene <= max(0, gas) and enough_supply
 
     def print(self, message: string, tag: string = None, stats: bool = True, log_level=logging.INFO):
