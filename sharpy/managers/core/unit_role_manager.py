@@ -214,7 +214,7 @@ class UnitRoleManager(ManagerBase):
         """ Free workers, ie. gathering minerals or gas, or idling, and not dedicated to defending or scouting."""
         units: Units = self.roles[UnitTask.Idle].units
         # Mules should not count for workers
-        return units.of_type([UnitTypeId.DRONE, UnitTypeId.PROBE, UnitTypeId.SCV])
+        return units.of_type([UnitTypeId.DRONE, UnitTypeId.DRONEBURROWED, UnitTypeId.PROBE, UnitTypeId.SCV])
 
     @property
     def free_workers(self) -> Units:
