@@ -26,7 +26,7 @@ changelings = {
 }
 
 
-class MicroStep(ABC, Component):
+class MicroStep(Component, ABC):
     rules: "MicroRules"
     engaged_power: ExtendedPower
     our_power: ExtendedPower
@@ -38,6 +38,7 @@ class MicroStep(ABC, Component):
     group: CombatUnits
 
     def __init__(self):
+        super().__init__()
         self.enemy_groups: List[CombatUnits] = []
         self.ready_to_attack_ratio: float = 0.0
         self.center: Point2 = Point2((0, 0))
