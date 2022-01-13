@@ -222,7 +222,7 @@ class UnitRoleManager(ManagerBase):
         units: Units = Units(self.roles[UnitTask.Idle].units, self.ai)
         units.extend(self.roles[UnitTask.Gathering].units)
         # Mules should not count for workers
-        return units.of_type([UnitTypeId.DRONE, UnitTypeId.PROBE, UnitTypeId.SCV])
+        return units.of_type([UnitTypeId.DRONE, UnitTypeId.DRONEBURROWED, UnitTypeId.PROBE, UnitTypeId.SCV])
 
     def unit_role(self, unit: Unit) -> UnitTask:
         for role in self.roles:
