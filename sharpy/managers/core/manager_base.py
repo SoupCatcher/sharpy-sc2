@@ -24,8 +24,5 @@ class ManagerBase(Component):
     async def post_update(self):
         pass
 
-    def print(self, msg: string, stats: bool = True, log_level=logging.INFO):
-        self.knowledge.print(msg, type(self).__name__, stats, log_level)
-
     async def on_end(self, game_result: Result):
         pass
