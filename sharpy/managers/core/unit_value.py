@@ -814,6 +814,7 @@ real_types: Dict[UnitTypeId, UnitTypeId] = {
     UnitTypeId.OVERLORDCOCOON: UnitTypeId.OVERLORD,
     UnitTypeId.RAVAGERCOCOON: UnitTypeId.RAVAGER,
     UnitTypeId.LURKERMPBURROWED: UnitTypeId.LURKERMP,
+    UnitTypeId.LURKERMPEGG: UnitTypeId.LURKERMP,
     UnitTypeId.QUEENBURROWED: UnitTypeId.QUEEN,
     UnitTypeId.CREEPTUMORBURROWED: UnitTypeId.CREEPTUMOR,
     UnitTypeId.INFESTORBURROWED: UnitTypeId.INFESTOR,
