@@ -637,7 +637,7 @@ class UnitValue(ManagerBase, IUnitValues):
         unit_value = self.unit_data.get(self.real_type(type_id), None)
         if unit_value is not None:
             return unit_value.combat_value * health_percentage
-        return 1.0 * health_percentage
+        return 0
 
     def ground_range(self, unit: Unit) -> float:
         func = self._ground_range_dict.get(unit.type_id, None)
