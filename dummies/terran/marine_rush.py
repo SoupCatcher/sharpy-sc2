@@ -97,6 +97,7 @@ class MarineRushBot(KnowledgeBot):
         elif self.tactic_index == 1:
             self.knowledge.print("20 marine all in", "Build")
             self.attack = DodgeRampAttack(20)
+            self.attack.attack_on_advantage = False
             chunk = [
                 Step(Supply(14), GridBuilding(UnitTypeId.SUPPLYDEPOT, 1)),
                 Step(UnitReady(UnitTypeId.SUPPLYDEPOT, 1), GridBuilding(UnitTypeId.BARRACKS, 1)),
