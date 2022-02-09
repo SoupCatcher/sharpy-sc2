@@ -154,12 +154,13 @@ class ProxyZealots(ActBase):
 
 # Original creation made by fazias
 class ProxyZealotRushBot(KnowledgeBot):
-    def __init__(self):
+    def __init__(self, build_name: str = "proxy"):
         super().__init__("Sharp Knives")
+        self.build_name = build_name
 
     async def create_plan(self) -> BuildOrder:
         self.building_solver.wall_type = WallType.ProtossMainProtoss
-        attack = PlanZoneAttack(7)
+        attack = PlanZoneAttack(7 if self.build_name == "proxy" else 20)
         attack.retreat_multiplier = 0.3
         # attack.attack_started = True
         backup = BuildOrder(
@@ -216,7 +217,7 @@ class ProxyZealotRushBot(KnowledgeBot):
             ProtossUnit(UnitTypeId.ZEALOT),
             GridBuilding(UnitTypeId.PYLON, 1, priority=True),
             Step(UnitReady(UnitTypeId.PYLON, 1), AutoPylon()),
-            ProxyZealots(),
+            ProxyZealots() if self.build_name == "proxy" else GridBuilding(UnitTypeId.GATEWAY, 4),
             ChronoUnit(UnitTypeId.ZEALOT, UnitTypeId.GATEWAY),
         )
         return BuildOrder(SequentialList(Step(None, proxy, skip=Once(Supply(50))), backup),

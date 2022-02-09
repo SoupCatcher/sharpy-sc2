@@ -254,7 +254,7 @@ class BotDefinitions:
             DummyBuilder("robo", "SharpRobots", Race.Protoss, "robo.py", MacroRobo),
             DummyBuilder("stalker", "SharpSpiders", Race.Protoss, "macro_stalkers.py", MacroStalkers),
             DummyBuilder("voidray", "SharpRays", Race.Protoss, "voidray.py", MacroVoidray),
-            DummyBuilder("zealot", "SharpKnives", Race.Protoss, "proxy_zealot_rush.py", ProxyZealotRushBot),
+            DummyBuilder("zealot", "SharpKnives", Race.Protoss, "proxy_zealot_rush.py", ProxyZealotRushBot, params_count=1),
             DummyBuilder("tempest", "SharpTempests", Race.Protoss, "one_base_tempests.py", OneBaseTempests),
             # Zerg
             DummyBuilder("12pool", "BluntCheese", Race.Zerg, "twelve_pool.py", TwelvePool),
