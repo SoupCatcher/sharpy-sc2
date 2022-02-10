@@ -211,10 +211,11 @@ class EnemyUnitsManager(ManagerBase, IEnemyUnitsManager):
 
     def re_adjust_morphs(self, types_check: Set[UnitTypeId]):
         for type_id in types_check:
-            count = len(self.cache.enemy(type_id))
-            tags_count = len(self._known_enemy_units_dict.get(type_id, []))
-            if count > tags_count - self._morphed_type.get(type_id, 0):
-                self._morphed_type[type_id] = max(0, count - tags_count)
+            if type_id in self._morphed_type:
+                count = len(self.cache.enemy(type_id))
+                tags_count = len(self._known_enemy_units_dict.get(type_id, []))
+                if count > tags_count - self._morphed_type.get(type_id, 0):
+                    self._morphed_type[type_id] = max(0, count - tags_count)
 
 
 ignored_types: Set[UnitTypeId] = {
