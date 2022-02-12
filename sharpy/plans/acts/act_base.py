@@ -221,7 +221,8 @@ class ActBase(Component, ABC):
 
         if worker is None:
             workers = self.ai.workers.filter(
-                lambda w: not w.has_buff(BuffId.ORACLESTASISTRAPTARGET) and not w.is_constructing_scv
+                lambda w: (not w.has_buff(BuffId.ORACLESTASISTRAPTARGET) and not w.is_constructing_scv
+                           and not self.roles.unit_role(w) == UnitTask.Building)
             ).sorted_by_distance_to(position)
             if not workers:
                 return None
