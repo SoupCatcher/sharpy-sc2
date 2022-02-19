@@ -141,13 +141,17 @@ class PathingManager(ManagerBase):
 
         self.map.normalize_influence(100)
 
+        def include_enemy(enemy):
+            # Don't add influence for old memories unless they are stationary
+            return enemy.movement_speed == 0 or enemy.age < 5
+
         for enemy_type, enemies in self.cache.enemy_unit_cache.items():
             example_enemy: Unit = enemies[0]
             power.clear()
             power.add_unit(enemy_type, 100)
 
             if self.unit_values.can_shoot_air(example_enemy):
-                positions: List[Point2] = [unit.position for unit in enemies]  # need to be specified in both places
+                positions: List[Point2] = [unit.position for unit in enemies if include_enemy(unit)]  # need to be specified in both places
                 s_range = self.unit_values.air_range(example_enemy) + example_enemy.radius
 
                 if example_enemy.type_id == UnitTypeId.CYCLONE:
@@ -156,7 +160,7 @@ class PathingManager(ManagerBase):
                 self.map.add_air_influence(positions, power.air_power, s_range, s_range + 3)
 
             if self.unit_values.can_shoot_ground(example_enemy):
-                positions = [unit.position for unit in enemies]  # need to be specified in both places
+                positions = [unit.position for unit in enemies if include_enemy(unit)]  # need to be specified in both places
                 s_range = self.unit_values.ground_range(example_enemy) + example_enemy.radius
                 if example_enemy.type_id == UnitTypeId.CYCLONE:
                     s_range = 15  # lock on break range
