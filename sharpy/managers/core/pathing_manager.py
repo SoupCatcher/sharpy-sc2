@@ -169,9 +169,9 @@ class PathingManager(ManagerBase):
                 elif s_range < 2:
                     self.map.add_walk_influence(positions, power.ground_power, 7)
                 elif s_range < 5:
-                    self.map.add_pure_ground_influence(positions, power.ground_power, s_range, 7)
+                    self.map.add_pure_ground_influence(positions, power.ground_power, s_range, 9)
                 else:
-                    self.map.add_pure_ground_influence(positions, power.ground_power, s_range, s_range + 3)
+                    self.map.add_pure_ground_influence(positions, power.ground_power, s_range, s_range + 5)
 
         # influence, radius, points, can it hit air?
         effect_dict: Dict[EffectId, Tuple[float, float, List[Point2], bool]] = dict()
