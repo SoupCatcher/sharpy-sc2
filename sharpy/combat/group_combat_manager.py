@@ -227,7 +227,7 @@ class GroupCombatManager(ManagerBase, ICombatManager):
             numpy_vectors.append(np.array([unit.position.x, unit.position.y]))
 
         if numpy_vectors:
-            clustering = DBSCAN(eps=self.rules.own_group_distance, min_samples=1).fit(numpy_vectors)
+            clustering = DBSCAN(eps=self.rules.own_group_distance, min_samples=1, algorithm="kd_tree").fit(numpy_vectors)
             # print(clustering.labels_)
 
             for index in range(0, len(clustering.labels_)):
@@ -256,7 +256,7 @@ class GroupCombatManager(ManagerBase, ICombatManager):
         ns_pf = time.perf_counter_ns()
 
         if self.cache.enemy_numpy_vectors:
-            clustering = DBSCAN(eps=self.enemy_group_distance, min_samples=1).fit(self.cache.enemy_numpy_vectors)
+            clustering = DBSCAN(eps=self.enemy_group_distance, min_samples=1, algorithm="kd_tree").fit(self.cache.enemy_numpy_vectors)
             # print(clustering.labels_)
             units = self.ai.all_enemy_units
             for index in range(0, len(clustering.labels_)):
