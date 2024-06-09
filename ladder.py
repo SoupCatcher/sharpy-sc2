@@ -64,8 +64,8 @@ def run_ladder_game(bot):
     ensure_directories()
     folder = os.path.join("data", "games")
 
-    time = datetime.now().strftime("%Y-%m-%d %H_%M_%S")
-    file_name = f"{opponent}_{time}"
+    # time = datetime.now().strftime("%Y-%m-%d %H_%M_%S")
+    file_name = f"{opponent}" # _{time}"
     path = f"{folder}/{file_name}.log"
 
     LoggingUtility.set_logger_file(log_level=get_config(False)["general"]["log_level"], path=path)
